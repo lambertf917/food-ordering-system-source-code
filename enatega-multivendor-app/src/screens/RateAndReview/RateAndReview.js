@@ -88,6 +88,10 @@ function RateAndReview(props) {
   }
 
   function onSubmit() {
+    // Prevent multiple submissions while mutation is in progress
+    if (loadingMutation) {
+      return
+    }
     if (rating > 0 && rating < 6) {
       mutate({
         variables: {
@@ -211,6 +215,7 @@ function RateAndReview(props) {
               {!loadingMutation && (
                 <TouchableOpacity
                   activeOpacity={0.7}
+                  disabled={loadingMutation}
                   onPress={onSubmit}
                   style={styles(currentTheme).btnTouch}>
                   <TextDefault textColor={currentTheme.black} H3 bold>
